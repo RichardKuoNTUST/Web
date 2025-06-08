@@ -6,41 +6,8 @@
   <link rel="icon" href="https://png.pngtree.com/png-vector/20241101/ourmid/pngtree-adorable-tuxedo-cat-with-bow-tie-and-pen-png-image_14177813.png" type="image/png">
 </head>
 <body>
-  <div id="result">載入中...</div>
-
-  <script>
-    fetch('https://script.google.com/macros/s/AKfycbxxsnxiY-ZC5kN8Moht9wcDmi-fNbLaUjar2KIqlvSvkg8ynhUbcK1inrdlkZxzWSE1/exec')
-      .then(res => res.json())
-      .then(data => {
-        if (data.error) {
-          document.getElementById('result').innerHTML = `<p>錯誤：${data.error}</p>`;
-          return;
-        }
-
-        let html = `<h3>總金額：${data.total.toFixed(2)} TWD</h3>`;
-
-        const renderTable = (title, rows) => {
-          html += `<h4>${title}</h4><table border="1"><tr>`;
-          rows[0].forEach(header => {
-            html += `<th>${header}</th>`;
-          });
-          html += `</tr>`;
-
-          for (let i = 1; i < rows.length; i++) {
-            html += `<tr>${rows[i].map(cell => `<td>${cell}</td>`).join('')}</tr>`;
-          }
-          html += `</table>`;
-        };
-
-        renderTable('邦嚕', data.mine);
-        renderTable('ㄇㄨ嚕', data.partner);
-        renderTable('邦ㄇㄨ', data.shared);
-
-        document.getElementById('result').innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById('result').innerHTML = `發生錯誤：${err.message}`;
-      });
-  </script>
+  <iframe src="https://script.google.com/macros/s/AKfycbxxsnxiY-ZC5kN8Moht9wcDmi-fNbLaUjar2KIqlvSvkg8ynhUbcK1inrdlkZxzWSE1/exec"
+          width="100%" height="600" style="border: none;">
+  </iframe>
 </body>
 </html>
