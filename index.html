@@ -2,34 +2,12 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>Google Sheet 資料展示</title>
+  <title>內嵌 Apps Script</title>
 </head>
 <body>
-  <h1>來自 Google Sheets 的資料</h1>
-  <div id="data"></div>
-
-  <script>
-    fetch('https://script.google.com/macros/s/AKfycbxV6QAJspJbcpHGUA3r0W3t08ASlXnXIUqULY92g6JAhtkdT7N1UENOfvx92rd0U4c6/exec') // ← 換成你的 API 網址
-      .then(res => res.json())
-      .then(data => {
-        let html = '<table border="1"><tr>';
-        const headers = Object.keys(data[0]);
-        headers.forEach(header => {
-          html += `<th>${header}</th>`;
-        });
-        html += '</tr>';
-
-        data.forEach(row => {
-          html += '<tr>';
-          headers.forEach(header => {
-            html += `<td>${row[header]}</td>`;
-          });
-          html += '</tr>';
-        });
-
-        html += '</table>';
-        document.getElementById('data').innerHTML = html;
-      });
-  </script>
+  <h1>來自 Google Apps Script 的內容</h1>
+  <iframe src="https://script.google.com/macros/s/AKfycbzJG_gl473tnmngv1_dHalmmnh44rPuMtfXqhJ8g9Y/dev"
+          width="100%" height="600" style="border: none;">
+  </iframe>
 </body>
 </html>
