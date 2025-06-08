@@ -2,12 +2,45 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>內嵌 Apps Script</title>
+  <title>顯示 Apps Script 資料</title>
 </head>
 <body>
-  <h1>來自 Google Apps Script 的內容</h1>
-  <iframe src="https://script.google.com/macros/s/AKfycbxV6QAJspJbcpHGUA3r0W3t08ASlXnXIUqULY92g6JAhtkdT7N1UENOfvx92rd0U4c6/exec"
-          width="100%" height="600" style="border: none;">
-  </iframe>
+  <h1>Google Sheet 資料</h1>
+  <div id="result">載入中...</div>
+
+  <script>
+    fetch('https://script.google.com/macros/s/AKfycbxV6QAJspJbcpHGUA3r0W3t08ASlXnXIUqULY92g6JAhtkdT7N1UENOfvx92rd0U4c6/exec')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          document.getElementById('result').innerHTML = `<p>錯誤：${data.error}</p>`;
+          return;
+        }
+
+        let html = `<h3>總金額：${data.total.toFixed(2)} TWD</h3>`;
+
+        const renderTable = (title, rows) => {
+          html += `<h4>${title}</h4><table border="1"><tr>`;
+          rows[0].forEach(header => {
+            html += `<th>${header}</th>`;
+          });
+          html += `</tr>`;
+
+          for (let i = 1; i < rows.length; i++) {
+            html += `<tr>${rows[i].map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+          }
+          html += `</table>`;
+        };
+
+        renderTable('邦嚕', data.mine);
+        renderTable('ㄇㄨ嚕', data.partner);
+        renderTable('邦ㄇㄨ', data.shared);
+
+        document.getElementById('result').innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById('result').innerHTML = `發生錯誤：${err.message}`;
+      });
+  </script>
 </body>
 </html>
